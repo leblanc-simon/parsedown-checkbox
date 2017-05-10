@@ -10,7 +10,7 @@
 
 class ParsedownCheckbox extends ParsedownExtra
 {
-    const VERSION = '0.0.1';
+    const VERSION = '0.0.2';
 
     protected function blockListComplete($block)
     {
@@ -41,9 +41,11 @@ class ParsedownCheckbox extends ParsedownExtra
                 if ('[ ] ' === $begin_line) {
                     $block['element']['text'][$iterator_element]['text'][$iterator_text] = '<input type="checkbox" disabled /> '.
                         substr(trim($block['element']['text'][$iterator_element]['text'][$iterator_text]), 4);
+                    $block['element']['text'][$iterator_element]['attributes'] = ['class' => 'parsedown-task-list parsedown-task-list-open'];
                 } elseif ('[x] ' === $begin_line) {
                     $block['element']['text'][$iterator_element]['text'][$iterator_text] = '<input type="checkbox" checked disabled /> '.
                         substr(trim($block['element']['text'][$iterator_element]['text'][$iterator_text]), 4);
+                    $block['element']['text'][$iterator_element]['attributes'] = ['class' => 'parsedown-task-list parsedown-task-list-close'];
                 }
             }
         }

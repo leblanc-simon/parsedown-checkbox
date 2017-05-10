@@ -39,10 +39,10 @@ class ParsedownCheckbox extends ParsedownExtra
             for ($iterator_text = 0; $iterator_text < $count_text; $iterator_text++) {
                 $begin_line = substr(trim($block['element']['text'][$iterator_element]['text'][$iterator_text]), 0, 4);
                 if ('[ ] ' === $begin_line) {
-                    $block['element']['text'][$iterator_element]['text'][$iterator_text] = '<input type="checkbox" /> '.
+                    $block['element']['text'][$iterator_element]['text'][$iterator_text] = '<input type="checkbox" disabled /> '.
                         substr(trim($block['element']['text'][$iterator_element]['text'][$iterator_text]), 4);
                 } elseif ('[x] ' === $begin_line) {
-                    $block['element']['text'][$iterator_element]['text'][$iterator_text] = '<input type="checkbox" checked /> '.
+                    $block['element']['text'][$iterator_element]['text'][$iterator_text] = '<input type="checkbox" checked disabled /> '.
                         substr(trim($block['element']['text'][$iterator_element]['text'][$iterator_text]), 4);
                 }
             }

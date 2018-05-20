@@ -10,47 +10,42 @@
 
 class ParsedownCheckbox extends ParsedownExtra
 {
-    const VERSION = '0.0.2';
-
-    protected function blockListComplete($block)
-    {
-        if (null === $block) {
-            return null;
-        }
-
-        if (
-            false === isset($block['element'])
-            || false === isset($block['element']['text'])
-            || false === is_array($block['element']['text'])
-        ) {
-            return $block;
-        }
-
-        $count_element = count($block['element']['text']);
-        for ($iterator_element = 0; $iterator_element < $count_element; $iterator_element++) {
-            if (
-                false === isset($block['element']['text'][$iterator_element]['text'])
-                || false === is_array($block['element']['text'][$iterator_element]['text'])
-            ) {
-                continue;
-            }
-
-            $count_text = count($block['element']['text'][$iterator_element]['text']);
-            for ($iterator_text = 0; $iterator_text < $count_text; $iterator_text++) {
-                $begin_line = substr(trim($block['element']['text'][$iterator_element]['text'][$iterator_text]), 0, 4);
-                if ('[ ] ' === $begin_line) {
-                    $block['element']['text'][$iterator_element]['text'][$iterator_text] = '<input type="checkbox" disabled /> '.
-                        substr(trim($block['element']['text'][$iterator_element]['text'][$iterator_text]), 4);
-                    $block['element']['text'][$iterator_element]['attributes'] = ['class' => 'parsedown-task-list parsedown-task-list-open'];
-                } elseif ('[x] ' === $begin_line) {
-                    $block['element']['text'][$iterator_element]['text'][$iterator_text] = '<input type="checkbox" checked disabled /> '.
-                        substr(trim($block['element']['text'][$iterator_element]['text'][$iterator_text]), 4);
-                    $block['element']['text'][$iterator_element]['attributes'] = ['class' => 'parsedown-task-list parsedown-task-list-close'];
-                }
-            }
-        }
-
-        return $block;
+    const VERSION = '0.1.0';
+  protected function blockListComplete(array $block)
+  {
+    if (null === $block) {
+      return null;
     }
+    if (!(isset($block['element']) && ($block['element']['name'] === 'ul') && is_array($block['element']['elements']))
+    ) {
+      return $block;
+    }
+
+    foreach ($block['element']['elements'] as &$element) {
+      if (!isset($element['handler']['argument'][0])){
+        continue;
+      }
+      $begin_line = substr(trim($element['handler']['argument'][0]), 0, 4);
+      $re = '/.*(\s{2,})$/';
+      if ('[ ] ' === $begin_line) {
+        if(preg_match_all($re, $element['handler']['argument'][0], $matches, PREG_SET_ORDER, 0) > 0){
+          $element['handler']['argument'][0] = trim($element['handler']['argument'][0]) . '<br>';
+        }
+        $element['handler']['argument'][0] = '<input type="checkbox" disabled /> '. substr($element['handler']['argument'][0], 4);
+        unset ($element['name']);
+
+      } elseif ('[x] ' === $begin_line) {
+        if(preg_match_all($re, $element['handler']['argument'][0], $matches, PREG_SET_ORDER, 0) > 0){
+          $element['handler']['argument'][0] = trim($element['handler']['argument'][0]) . '<br>';
+        }
+        $element['handler']['argument'][0] = '<input type="checkbox" checked disabled /> '. substr($element['handler']['argument'][0], 4);
+        unset ($element['name']);
+      }
+    }
+    unset($element);
+    unset ($block['element']['name']);
+
+    return $block;
+  } 
 }
 

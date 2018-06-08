@@ -11,7 +11,7 @@
 class ParsedownCheckbox extends ParsedownExtra
 {
     const VERSION = '0.1.0';
-  protected function blockListComplete(array $block)
+protected function blockListComplete(array $block)
   {
     if (null === $block) {
       return null;
@@ -20,6 +20,7 @@ class ParsedownCheckbox extends ParsedownExtra
     ) {
       return $block;
     }
+    //echo '<pre>';var_dump($block);echo '</pre>';
 
     foreach ($block['element']['elements'] as &$element) {
       if (!isset($element['handler']['argument'][0])){
@@ -33,6 +34,7 @@ class ParsedownCheckbox extends ParsedownExtra
         }
         $element['handler']['argument'][0] = '<input type="checkbox" disabled /> '. substr($element['handler']['argument'][0], 4);
         unset ($element['name']);
+        unset ($block['element']['name']);
 
       } elseif ('[x] ' === $begin_line) {
         if(preg_match_all($re, $element['handler']['argument'][0], $matches, PREG_SET_ORDER, 0) > 0){
@@ -40,12 +42,11 @@ class ParsedownCheckbox extends ParsedownExtra
         }
         $element['handler']['argument'][0] = '<input type="checkbox" checked disabled /> '. substr($element['handler']['argument'][0], 4);
         unset ($element['name']);
+        unset ($block['element']['name']);
       }
     }
     unset($element);
-    unset ($block['element']['name']);
 
     return $block;
-  } 
-}
-
+  }
+} 

@@ -10,13 +10,18 @@
             "name": "Simon Leblanc",
             "email": "contact@leblanc-simon.eu",
             "homepage": "https://www.leblanc-simon.fr"
+        },
+        {
+          "name": "NEYOWO",
+          "email": "mira@neyowo.com",
+          "homepage": "https://neyowo.com"
         }
     ],
     "require": {
-        "erusev/parsedown-extra": "^0.7.1"
+        "erusev/parsedown": "1.8.0-beta-4",
+        "erusev/parsedown-extra": "0.8.0-beta-1"
     },
     "autoload": {
         "files": ["ParsedownCheckbox.php"]
     }
 }
-

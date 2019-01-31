@@ -17,19 +17,11 @@ EOF;
     const HTML = <<<EOF
 <p>Test</p>
 <ul>
-<li class="parsedown-task-list parsedown-task-list-open">
-<input type="checkbox" disabled /> test 1
-</li>
+<li class="parsedown-task-list parsedown-task-list-open"><input type="checkbox" disabled /> test 1</li>
 <li>[] test 2</li>
-<li class="parsedown-task-list parsedown-task-list-close">
-<input type="checkbox" checked disabled /> test 3
-<ul>
-<li class="parsedown-task-list parsedown-task-list-open">
-<input type="checkbox" disabled /> test 4 <a></a>
-</li>
-<li class="parsedown-task-list parsedown-task-list-close">
-<input type="checkbox" checked disabled /> test 5
-</li>
+<li class="parsedown-task-list parsedown-task-list-close"><input type="checkbox" checked disabled /> test 3<ul>
+<li class="parsedown-task-list parsedown-task-list-open"><input type="checkbox" disabled /> test 4 <a></a></li>
+<li class="parsedown-task-list parsedown-task-list-close"><input type="checkbox" checked disabled /> test 5</li>
 </ul>
 </li>
 <li><a href="https://markdown.org">test</a> 6</li>
@@ -40,19 +32,11 @@ EOF;
     const HTML_SANITIZED = <<<EOF
 <p>Test</p>
 <ul>
-<li class="parsedown-task-list parsedown-task-list-open">
-<input type="checkbox" disabled /> test 1
-</li>
+<li class="parsedown-task-list parsedown-task-list-open"><input type="checkbox" disabled /> test 1</li>
 <li>[] test 2</li>
-<li class="parsedown-task-list parsedown-task-list-close">
-<input type="checkbox" checked disabled /> test 3
-<ul>
-<li class="parsedown-task-list parsedown-task-list-open">
-<input type="checkbox" disabled /> test 4 &lt;a&gt;&lt;/a&gt;
-</li>
-<li class="parsedown-task-list parsedown-task-list-close">
-<input type="checkbox" checked disabled /> test 5
-</li>
+<li class="parsedown-task-list parsedown-task-list-close"><input type="checkbox" checked disabled /> test 3<ul>
+<li class="parsedown-task-list parsedown-task-list-open"><input type="checkbox" disabled /> test 4 &lt;a&gt;&lt;/a&gt;</li>
+<li class="parsedown-task-list parsedown-task-list-close"><input type="checkbox" checked disabled /> test 5</li>
 </ul>
 </li>
 <li><a href="https://markdown.org">test</a> 6</li>

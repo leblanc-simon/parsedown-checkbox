@@ -9,7 +9,7 @@
  */
 class ParsedownCheckbox extends ParsedownExtra
 {
-    const VERSION = '0.0.4';
+    const VERSION = '0.1.0';
 
     public function __construct()
     {
@@ -39,7 +39,6 @@ class ParsedownCheckbox extends ParsedownExtra
 
     protected function blockListComplete(array $block)
     {
-//        var_dump($block['element']['elements']);die;
         foreach ($block['element']['elements'] as &$li_element) {
             foreach ($li_element['handler']['argument'] as $text) {
                 $begin_line = substr(trim($text), 0, 4);

@@ -9,7 +9,7 @@
  */
 class ParsedownCheckbox extends ParsedownExtra
 {
-    const VERSION = '0.0.4';
+    const VERSION = '0.1.0';
 
     public function __construct()
     {
@@ -39,8 +39,8 @@ class ParsedownCheckbox extends ParsedownExtra
 
     protected function blockListComplete(array $block)
     {
-        foreach ($block['element']['text'] as &$li_element) {
-            foreach ($li_element['text'] as $text) {
+        foreach ($block['element']['elements'] as &$li_element) {
+            foreach ($li_element['handler']['argument'] as $text) {
                 $begin_line = substr(trim($text), 0, 4);
                 if ('[ ] ' === $begin_line) {
                     $li_element['attributes'] = ['class' => 'parsedown-task-list parsedown-task-list-open'];
@@ -59,7 +59,10 @@ class ParsedownCheckbox extends ParsedownExtra
 
     protected function blockCheckboxComplete(array $block)
     {
-        $block['markup'] = $this->{$block['handler']}($block['text']);
+        $block['element'] = [
+            'rawHtml' => $this->{$block['handler']}($block['text']),
+            'allowRawHtmlInSafeMode' => true,
+        ];
 
         return $block;
     }

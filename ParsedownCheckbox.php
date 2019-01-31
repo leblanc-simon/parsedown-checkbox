@@ -7,50 +7,78 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 class ParsedownCheckbox extends ParsedownExtra
 {
-    const VERSION = '0.0.3';
+    const VERSION = '0.0.4';
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        array_unshift($this->BlockTypes['['], 'Checkbox');
+    }
+
+    protected function blockCheckbox($line)
+    {
+        $text = trim($line['text']);
+        $begin_line = substr($text, 0, 4);
+        if ('[ ] ' === $begin_line) {
+            return [
+                'handler' => 'checkboxUnchecked',
+                'text' => substr(trim($text), 4),
+            ];
+        }
+
+        if ('[x] ' === $begin_line) {
+            return [
+                'handler' => 'checkboxChecked',
+                'text' => substr(trim($text), 4),
+            ];
+        }
+    }
 
     protected function blockListComplete(array $block)
     {
-        if (null === $block) {
-            return null;
-        }
-
-        if (
-            false === isset($block['element'])
-            || false === isset($block['element']['text'])
-            || false === is_array($block['element']['text'])
-        ) {
-            return $block;
-        }
-
-        $count_element = count($block['element']['text']);
-        for ($iterator_element = 0; $iterator_element < $count_element; $iterator_element++) {
-            if (
-                false === isset($block['element']['text'][$iterator_element]['text'])
-                || false === is_array($block['element']['text'][$iterator_element]['text'])
-            ) {
-                continue;
-            }
-
-            $count_text = count($block['element']['text'][$iterator_element]['text']);
-            for ($iterator_text = 0; $iterator_text < $count_text; $iterator_text++) {
-                $begin_line = substr(trim($block['element']['text'][$iterator_element]['text'][$iterator_text]), 0, 4);
+        foreach ($block['element']['text'] as &$li_element) {
+            foreach ($li_element['text'] as $text) {
+                $begin_line = substr(trim($text), 0, 4);
                 if ('[ ] ' === $begin_line) {
-                    $block['element']['text'][$iterator_element]['text'][$iterator_text] = '<input type="checkbox" disabled /> '.
-                        substr(trim($block['element']['text'][$iterator_element]['text'][$iterator_text]), 4);
-                    $block['element']['text'][$iterator_element]['attributes'] = ['class' => 'parsedown-task-list parsedown-task-list-open'];
+                    $li_element['attributes'] = ['class' => 'parsedown-task-list parsedown-task-list-open'];
                 } elseif ('[x] ' === $begin_line) {
-                    $block['element']['text'][$iterator_element]['text'][$iterator_text] = '<input type="checkbox" checked disabled /> '.
-                        substr(trim($block['element']['text'][$iterator_element]['text'][$iterator_text]), 4);
-                    $block['element']['text'][$iterator_element]['attributes'] = ['class' => 'parsedown-task-list parsedown-task-list-close'];
+                    $li_element['attributes'] = ['class' => 'parsedown-task-list parsedown-task-list-close'];
                 }
             }
         }
 
         return $block;
     }
-}
 
+    protected function blockCheckboxContinue(array $block)
+    {
+    }
+
+    protected function blockCheckboxComplete(array $block)
+    {
+        $block['markup'] = $this->{$block['handler']}($block['text']);
+
+        return $block;
+    }
+
+    protected function checkboxUnchecked($text)
+    {
+        if ($this->markupEscaped || $this->safeMode) {
+            $text = self::escape($text);
+        }
+
+        return '<input type="checkbox" disabled /> '.$text;
+    }
+
+    protected function checkboxChecked($text)
+    {
+        if ($this->markupEscaped || $this->safeMode) {
+            $text = self::escape($text);
+        }
+
+        return '<input type="checkbox" checked disabled /> '.$text;
+    }
+}

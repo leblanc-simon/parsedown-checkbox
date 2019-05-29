@@ -9,7 +9,7 @@
  */
 class ParsedownCheckbox extends ParsedownExtra
 {
-    const VERSION = '0.1.0';
+    const VERSION = '0.1.1';
 
     public function __construct()
     {
@@ -73,7 +73,7 @@ class ParsedownCheckbox extends ParsedownExtra
             $text = self::escape($text);
         }
 
-        return '<input type="checkbox" disabled /> '.$text;
+		return '<input type="checkbox" disabled /> ' . $this->line($text);
     }
 
     protected function checkboxChecked($text)
@@ -82,6 +82,6 @@ class ParsedownCheckbox extends ParsedownExtra
             $text = self::escape($text);
         }
 
-        return '<input type="checkbox" checked disabled /> '.$text;
+		return '<input type="checkbox" checked disabled /> ' . $this->line($text);
     }
 }

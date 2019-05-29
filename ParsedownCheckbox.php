@@ -73,7 +73,7 @@ class ParsedownCheckbox extends ParsedownExtra
             $text = self::escape($text);
         }
 
-		return '<input type="checkbox" disabled /> ' . $this->line($text);
+        return '<input type="checkbox" disabled /> ' . $this->line($text);
     }
 
     protected function checkboxChecked($text)
@@ -82,6 +82,6 @@ class ParsedownCheckbox extends ParsedownExtra
             $text = self::escape($text);
         }
 
-		return '<input type="checkbox" checked disabled /> ' . $this->line($text);
+        return '<input type="checkbox" checked disabled /> ' . $this->line($text);
     }
 }

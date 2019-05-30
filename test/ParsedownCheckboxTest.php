@@ -39,7 +39,7 @@ EOF;
 <li class="parsedown-task-list parsedown-task-list-open"><input type="checkbox" disabled /> test 1</li>
 <li>[] test 2</li>
 <li class="parsedown-task-list parsedown-task-list-close"><input type="checkbox" checked disabled /> test 3<ul>
-<li class="parsedown-task-list parsedown-task-list-open"><input type="checkbox" disabled /> test 4 &amp;lt;a&amp;gt;&amp;lt;/a&amp;gt;</li>
+<li class="parsedown-task-list parsedown-task-list-open"><input type="checkbox" disabled /> test 4 &lt;a&gt;&lt;/a&gt;</li>
 <li class="parsedown-task-list parsedown-task-list-close"><input type="checkbox" checked disabled /> test 5</li>
 </ul>
 </li>

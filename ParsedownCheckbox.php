@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of the ParsedownCheckbox package.
  *
@@ -9,7 +10,7 @@
  */
 class ParsedownCheckbox extends ParsedownExtra
 {
-    const VERSION = '0.1.1';
+    const VERSION = '0.2.0';
 
     public function __construct()
     {
@@ -73,7 +74,7 @@ class ParsedownCheckbox extends ParsedownExtra
             $text = self::escape($text);
         }
 
-        return '<input type="checkbox" disabled /> ' . $this->line($text);
+        return '<input type="checkbox" disabled /> ' . $this->format($text);
     }
 
     protected function checkboxChecked($text)
@@ -82,6 +83,31 @@ class ParsedownCheckbox extends ParsedownExtra
             $text = self::escape($text);
         }
 
-        return '<input type="checkbox" checked disabled /> ' . $this->line($text);
+        return '<input type="checkbox" checked disabled /> ' . $this->format($text);
+    }
+
+    /**
+     * Formats the checkbox label without double escaping.
+     * @param string $text the string to format
+     * @return string the formatted text
+     */
+    protected function format($text)
+    {
+        // backup settings
+        $markup_escaped = $this->markupEscaped;
+        $safe_mode = $this->safeMode;
+
+        // disable rules to prevent double escaping.
+        $this->setMarkupEscaped(false);
+        $this->setSafeMode(false);
+
+        // format line
+        $text = $this->line($text);
+
+        // reset old values
+        $this->setMarkupEscaped($markup_escaped);
+        $this->setSafeMode($safe_mode);
+
+        return $text;
     }
 }

@@ -12,6 +12,8 @@ Test
     - [x] test 5
 - [test](https://markdown.org) 6
 - [x](https://markdown.org) test 7
+- [x] [test 8](https://markdown.org)
+- [ ] **test 9**
 EOF;
 
     const HTML = <<<EOF
@@ -26,6 +28,8 @@ EOF;
 </li>
 <li><a href="https://markdown.org">test</a> 6</li>
 <li><a href="https://markdown.org">x</a> test 7</li>
+<li class="parsedown-task-list parsedown-task-list-close"><input type="checkbox" checked disabled /> <a href="https://markdown.org">test 8</a></li>
+<li class="parsedown-task-list parsedown-task-list-open"><input type="checkbox" disabled /> <strong>test 9</strong></li>
 </ul>
 EOF;
 
@@ -41,6 +45,8 @@ EOF;
 </li>
 <li><a href="https://markdown.org">test</a> 6</li>
 <li><a href="https://markdown.org">x</a> test 7</li>
+<li class="parsedown-task-list parsedown-task-list-close"><input type="checkbox" checked disabled /> <a href="https://markdown.org">test 8</a></li>
+<li class="parsedown-task-list parsedown-task-list-open"><input type="checkbox" disabled /> <strong>test 9</strong></li>
 </ul>
 EOF;
 
